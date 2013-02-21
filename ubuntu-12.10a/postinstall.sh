@@ -8,8 +8,9 @@ apt-get -y update
 apt-get -y upgrade
 apt-get -y install dkms linux-headers-$(uname -r) build-essential
 apt-get -y install libreadline6 libreadline6-dev zlib1g zlib1g-dev libssl-dev libyaml-dev 
-apt-get -y install libc6-dev libxml2-dev libxslt-dev nano
-apt-get -y install autoconf ncurses-dev automake libtool bison git-core
+apt-get -y install libc6-dev libxml2-dev libxslt-dev libsqlite3-0 libsqlite3-dev 
+apt-get -y install sqlite3 autoconf ncurses-dev automake libtool bison git-core
+apt-get -y install nano vim nfs-common
 apt-get clean
 
 # Installing the virtualbox guest additions
@@ -32,15 +33,15 @@ sed -i -e 's/%admin ALL=(ALL) ALL/%admin ALL=NOPASSWD:ALL/g' /etc/sudoers
 
 # Install Ruby from source in /opt so that users of Vagrant
 # can install their own Rubies using packages or however.
-wget http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-p385.tar.gz
-tar xvzf ruby-1.9.3-p385.tar.gz
-cd ruby-1.9.3-p385
+wget http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-p286.tar.gz
+tar xvzf ruby-1.9.3-p286.tar.gz
+cd ruby-1.9.3-p286
 ./configure 
 make
 make install
 cd ..
-rm -rf ruby-1.9.3-p385
-rm ruby-1.9.3-p385.tar.gz
+rm -rf ruby-1.9.3-p286
+rm ruby-1.9.3-p286.tar.gz
 
 # Update RubyGems
 echo "Updating RubyGem System..."
