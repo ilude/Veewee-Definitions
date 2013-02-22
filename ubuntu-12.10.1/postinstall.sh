@@ -6,17 +6,16 @@ date > /etc/vagrant_box_build_time
 # etc., and remove optional things to trim down the machine.
 apt-get -y update
 apt-get -y upgrade
-apt-get -y install dkms linux-headers-$(uname -r) build-essential
-apt-get -y install libreadline6 libreadline6-dev zlib1g zlib1g-dev libssl-dev libyaml-dev 
-apt-get -y install libc6-dev libxml2-dev libxslt-dev nano
-apt-get -y install autoconf ncurses-dev automake libtool bison git-core
+apt-get -y install linux-headers-$(uname -r) build-essential
+apt-get -y install zlib1g-dev libssl-dev libreadline-gplv2-dev libyaml-dev
+apt-get -y install nano git-core nfs-common
 apt-get clean
 
 # Installing the virtualbox guest additions
+apt-get -y install dkms
 VBOX_VERSION=$(cat /home/vagrant/.vbox_version)
-wget http://download.virtualbox.org/virtualbox/$VBOX_VERSION/VBoxGuestAdditions_$VBOX_VERSION.iso
 mount -o loop VBoxGuestAdditions_$VBOX_VERSION.iso /mnt
-sh /mnt/VBoxLinuxAdditions.run --nox11
+sh /mnt/VBoxLinuxAdditions.run
 umount /mnt
 
 rm VBoxGuestAdditions_$VBOX_VERSION.iso
@@ -66,7 +65,7 @@ chmod 600 /home/vagrant/.ssh/authorized_keys
 chown -R vagrant /home/vagrant/.ssh
 
 # Remove items used for building, since they aren't needed anymore
-apt-get -y remove whoopsie linux-headers-$(uname -r) 
+apt-get -y remove whoopsie linux-headers-$(uname -r) build-essential
 apt-get -y autoremove
 
 # Zero out the free space to save space in the final image:
